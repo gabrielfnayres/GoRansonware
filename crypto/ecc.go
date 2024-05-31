@@ -43,3 +43,14 @@ func (ec *EllipticCurve) EncodeEccPrivateKey(privKey *ecdsa.PrivateKey) (key str
 	key = string(pemEncoded)
 	return key, nil
 }
+
+func (ec *EllipticCurve) EncodeEccPublicKey(pubKey *ecdsa.PublicKey) (key string, err error) {
+	encoded, err := x509.MarshalPKIXPublicKey(pubKey)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	pemEncoded := pem.EncodeToMemory(&pem.Block{Type: "Public ECC Key", Bytes: encoded})
+	key = string(pemEncoded)
+	return key, nil
+}
