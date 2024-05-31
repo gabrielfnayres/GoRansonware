@@ -12,7 +12,7 @@ type Keys struct {
 	private *rsa.PrivateKey
 }
 
-func GenerateKeys(bits int) (*Keys, error) {
+func GenerateRSAKeys(bits int) (*Keys, error) {
 	private_key, err := rsa.GenerateKey(rand.Reader, bits)
 	if err != nil {
 		panic(err)

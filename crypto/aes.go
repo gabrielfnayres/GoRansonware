@@ -9,7 +9,7 @@ import (
 
 type AESKey []byte
 
-func GenerateKey(bits int) (AESKey, error) {
+func GenerateAESKey(bits int) (AESKey, error) {
 	key := make([]byte, bits)
 
 	_, err := io.ReadFull(rand.Reader, key)
