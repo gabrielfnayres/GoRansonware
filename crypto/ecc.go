@@ -4,6 +4,8 @@ import (
 	"crypto/ecdsa"
 	"crypto/elliptic"
 	"crypto/rand"
+	"crypto/x509"
+	"encoding/pem"
 )
 
 type EllipticCurve struct {
@@ -28,4 +30,16 @@ func (ec *EllipticCurve) GenerateEccKeys() (privateKey *ecdsa.PrivateKey, public
 
 	return privateKey, &privateKey.PublicKey, nil
 
+}
+
+func (ec *EllipticCurve) EncodeEccPrivateKey(privKey *ecdsa.PrivateKey) (key string, err error) {
+	encoded, err := x509.MarshalECPrivateKey(privKey)
+	if err != nil {
+		panic(err.Error())
+	}
+	// private enhaced mails setup to send the key to the server
+	pemEncoded := pem.EncodeToMemory(&pem.Block{Type: "Private ECC Key", Bytes: encoded})
+
+	key = string(pemEncoded)
+	return key, nil
 }
